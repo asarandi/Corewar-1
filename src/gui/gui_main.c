@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 22:32:23 by asarandi          #+#    #+#             */
-/*   Updated: 2018/11/09 04:42:52 by asarandi         ###   ########.fr       */
+/*   Updated: 2018/11/10 05:18:23 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	gui_fatal_error(t_gui *g, char *msg)
 {
 	if (g != NULL)
 		gui_clean_up(g);
-	ft_printf(CONSOLE_TEXT_RED, "ERROR:", CONSOLE_TEXT_EOC, " %s\n", msg);
+	ft_printf(CONSOLE_TEXT_RED "ERROR:" CONSOLE_TEXT_EOC " %s\n", msg);
 	exit(0);
 	return (0);
 }
