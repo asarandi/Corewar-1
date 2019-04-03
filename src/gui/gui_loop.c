@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 04:36:04 by asarandi          #+#    #+#             */
-/*   Updated: 2018/11/09 04:46:30 by asarandi         ###   ########.fr       */
+/*   Updated: 2018/11/19 20:20:00 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	gui_loop_hook_macos(t_gui *g)
 	(void)gui_calc_fps(g);
 	(void)mlx_put_image_to_window(g->mlx, g->win, g->img, 0, 0);
 	(void)gui_info_panel(g);
+	(void)gui_init_colors(g);
 	return (0);
 }
 

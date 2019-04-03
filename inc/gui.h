@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 05:12:57 by asarandi          #+#    #+#             */
-/*   Updated: 2018/11/09 07:28:58 by asarandi         ###   ########.fr       */
+/*   Updated: 2018/11/19 20:53:01 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@
 # define DISTRIB_DEFAULT_COLOR	BLOCK_DEFAULT_COLOR
 # define LIVE_BAR_DEFAULT_COLOR	BLOCK_DEFAULT_COLOR
 
-# define GUI_BLOCK_ROW_SPACING	1
-# define GUI_BLOCK_COL_SPACING	1
+# define GUI_BLOCK_ROW_SPACING	3
+# define GUI_BLOCK_COL_SPACING	3
 # define GUI_BLOCK_ARENA_X_POS	10
 # define GUI_BLOCK_ARENA_Y_POS	10
 # define GUI_BLOCK_NUM_ROWS		64
 # define GUI_BLOCK_NUM_COLS		64
-# define GUI_BLOCK_WIDTH		10
-# define GUI_BLOCK_HEIGHT		10
+# define GUI_BLOCK_WIDTH		18
+# define GUI_BLOCK_HEIGHT		18
 # define GUI_BLOCK_ROW_HEIGHT	(GUI_BLOCK_HEIGHT + GUI_BLOCK_ROW_SPACING)
 # define GUI_BLOCK_COL_WIDTH	(GUI_BLOCK_WIDTH + GUI_BLOCK_COL_SPACING)
 # define WIN_BLOCK_HEIGHT	((GBRH * GBNR) + (GUI_BLOCK_ARENA_X_POS * 2))
@@ -67,8 +67,8 @@
 # define WIN_TOTAL_HEIGHT		(WIN_BLOCK_HEIGHT)
 
 # define MAX_LUM_STEPS			255
-# define LUM_START				70
-# define LUM_END				30
+# define LUM_START				80
+# define LUM_END				35
 # define LUM_TEXT_DIV			5
 # define LUM_RANGE				(LUM_START - LUM_END)
 # define LUM_MAX_STEPS			MAX_LUM_STEPS

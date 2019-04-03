@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 21:09:55 by asarandi          #+#    #+#             */
-/*   Updated: 2018/11/09 02:08:36 by asarandi         ###   ########.fr       */
+/*   Updated: 2018/11/19 20:27:49 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ int	gui_init_colors(t_gui *g)
 	int			j;
 	int			rgb;
 	float		lum;
-	const float	hues[] = GUI_PLAYER_HUES1;
+	static float	hues[] = {120, 240, 0, 180}; //zazedelic   //{0, 60, 120, 240};
+
 
 	i = 0;
 	while (i < MAX_LUM_STEPS + 1)
@@ -104,5 +105,11 @@ int	gui_init_colors(t_gui *g)
 		}
 		i++;
 	}
+	float inc = 0.1;
+	hues[0] = fmodf(hues[0] + inc, 360);
+	hues[1] = fmodf(hues[1] + inc, 360);
+	hues[2] = fmodf(hues[2] + inc, 360);
+	hues[3] = fmodf(hues[3] + inc, 360);
+
 	return (0);
 }
