@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 22:31:03 by asarandi          #+#    #+#             */
-/*   Updated: 2019/04/04 20:30:36 by asarandi         ###   ########.fr       */
+/*   Updated: 2019/04/04 21:08:09 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void    sfml_puts(t_gui *g, int y, int x, int c, char *s)
     text = sfText_create();
     sfText_setString(text, s);
     sfText_setFont(text, g->font);
-    sfText_setCharacterSize(text, 20); /* XXX */
+    sfText_setCharacterSize(text, 18); /* XXX */
 
-    color = sfColor_fromRGB((c >> 16) & 0xff, (c >> 8) & 0xff, c & 0xff);
+    color = sfColor_fromRGB(c & 0xff, (c >> 8) & 0xff, (c >> 16) & 0xff);
     sfText_setColor(text, color);
 
     point.x = y;

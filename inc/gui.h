@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 05:12:57 by asarandi          #+#    #+#             */
-/*   Updated: 2019/04/04 20:28:35 by asarandi         ###   ########.fr       */
+/*   Updated: 2019/04/04 21:06:15 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@
 #  define GUI_LOOP_HOOK	gui_loop_hook_linux
 #  define INFO_PANEL_X			(GUI_BLOCK_ARENA_X_POS + 10)
 # elif __APPLE__
-#  define GUI_CHAR_HEIGHT		25
+#  define GUI_CHAR_HEIGHT		23
 #  define GUI_CHAR_WIDTH		9
 #  define LIVE_BAR_TEXT_X_POS	(LIVE_BAR_X_POS - (GUI_CHAR_HEIGHT * 1) - 4)
 #  define DIST_TEXT_X_POS		(DIST_X_POS - (GUI_CHAR_HEIGHT * 1) - 4)

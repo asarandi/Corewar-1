@@ -5,6 +5,8 @@
 a.out
 vm_champs
 corewar
+asm
+disasm
 *.cor
 ._*
 *SFML*
