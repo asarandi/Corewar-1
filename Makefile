@@ -6,8 +6,10 @@
 
 NAME = corewar
 CC = gcc
-CFLAGS += -Wall -Werror -Wextra
-CFLAGS += -Ofast -funroll-loops
+#CFLAGS += -Wall -Werror -Wextra
+#CFLAGS += -Ofast -funroll-loops
+CFLAGS += -g -Wno-deprecated-declarations
+											# sfMouseWheelEvent
 INC = -I inc -I lib/libft/inc
 LIBFTDIR = lib/libft/
 LIBFT = $(LIBFTDIR)libft.a
@@ -27,9 +29,9 @@ VM_OBJECTS=$(addprefix $(VMOBJDIR), $(addsuffix .o, $(VM_FILES)))
 
 GUI_FILES = gui_main gui_bars gui_blocks gui_colors gui_cpf gui_hooks gui_pc_boxes gui_text gui_loop
 UNAME	:= $(shell uname -s)
-ifeq ($(UNAME),Darwin)
-	GUI_FILES += gui_mlx_macos
-endif
+#ifeq ($(UNAME),Darwin)
+#	GUI_FILES += gui_mlx_macos
+#endif
 ifeq ($(UNAME),Linux)
 	GUI_FILES += gui_mlx_linux
 	CFLAGS += -Wno-unused-result
@@ -52,6 +54,9 @@ DISASM_FILES = file_op instruction main print stdin util zaz_op
 DISASMSRCDIR = $(addprefix $(SRC_DIR), $(DISASMDIR))
 DISASMOBJDIR = $(addprefix $(OBJ_DIR), $(DISASMDIR))
 DISASM_OBJECTS = $(addprefix $(DISASMOBJDIR), $(addsuffix .o, $(DISASM_FILES)))
+
+SFMLINC := -I CSFML-2.5-macOS-clang/include 
+SFMLLIB := -L CSFML-2.5-macOS-clang/lib -lcsfml-graphics -lcsfml-audio -lcsfml-window
 
 ifeq ($(UNAME),Linux)
 	MLXDIR := $(MLXDIR)linux/
@@ -87,11 +92,11 @@ YELLOW = \033[1;33m
 
 all: $(VM) $(ASM) $(DISASM)
 #------------------------------------------------------------------------------
-$(VM): $(VM_OBJECTS) $(GUI_OBJECTS) $(LIBFT) $(LIBMLX)
-	$(CC) $(CFLAGS) $^ $(LIB) $(MLXLIB) -o $@
+$(VM): $(VM_OBJECTS) $(GUI_OBJECTS) $(LIBFT)
+	$(CC) $(CFLAGS) $^ $(LIB) $(SFMLLIB) -o $@
 
 $(VM_OBJECTS): $(VMOBJDIR)%.o : $(VMSRCDIR)%.c | $(VMOPSOBJDIR)
-	$(CC) $(CFLAGS) $(INC) $(MLXINC) -c $< -o $@
+	$(CC) $(CFLAGS) $(INC) $(SFMLINC) -c $< -o $@
 
 $(VMOPSOBJDIR): | $(VMOBJDIR)
 	mkdir -p $@
@@ -121,7 +126,7 @@ $(DISASMOBJDIR): | $(OBJ_DIR)
 	mkdir -p $@
 #------------------------------------------------------------------------------
 $(GUI_OBJECTS): $(GUIOBJDIR)%.o : $(GUISRCDIR)%.c | $(GUIOBJDIR)
-	$(CC) $(CFLAGS) $(INC) $(MLXINC) -c $< -o $@
+	$(CC) $(CFLAGS) $(INC) $(SFMLINC) -c $< -o $@
 
 $(GUIOBJDIR): | $(OBJ_DIR)
 	mkdir -p $@
@@ -133,6 +138,52 @@ $(LIBFT):
 $(LIBMLX):
 	make -C $(MLXDIR)
 #------------------------------------------------------------------------------
+
+sfml:
+
+ifeq (,$(wildcard ./SFML-2.5.1-macOS-clang.tar.gz))
+	curl -L 'https://www.sfml-dev.org/files/SFML-2.5.1-macOS-clang.tar.gz' -O
+endif
+
+ifeq (,$(wildcard ./SFML-2.5.1-macos-clang))	
+	tar xvzf SFML-2.5.1-macOS-clang.tar.gz
+endif	
+
+ifeq (,$(wildcard ./CSFML-2.5-macOS-clang.tar.gz))
+	curl -L	'https://www.sfml-dev.org/files/CSFML-2.5-macOS-clang.tar.gz' -O
+endif
+
+ifeq (,$(wildcard ./CSFML-2.5-macOS-clang))
+	tar xvzf CSFML-2.5-macOS-clang.tar.gz
+endif
+
+ifneq (,$(wildcard ./SFML-2.5.1-macos-clang/extlibs/*.framework))
+	mv -f SFML-2.5.1-macos-clang/extlibs/* SFML-2.5.1-macos-clang/Frameworks
+endif
+
+ifeq (,$(wildcard ./monaco.ttf))
+	git clone https://github.com/todylu/monaco.ttf
+endif
+
+	@clear
+	@echo 'run these commands in your terminal:'
+	@echo
+	@echo
+	@echo
+	@echo 'export DYLD_LIBRARY_PATH="`pwd`/CSFML-2.5-macOS-clang/lib"'
+	@echo 'export DYLD_FRAMEWORK_PATH="`pwd`/SFML-2.5.1-macos-clang/Frameworks"'
+
+	@echo
+	@echo
+	@echo
+	@echo
+	@echo
+
+	@export DYLD_LIBRARY_PATH="`pwd`/CSFML-2.5-macOS-clang/lib" && export DYLD_FRAMEWORK_PATH="`pwd`/SFML-2.5.1-macos-clang/Frameworks" && make guitest
+
+gui:
+	rm -rf $(GUI_OBJECTS)
+	make $(VM)
 
 again:
 	rm -f $(VM_OBJECTS) $(GUI_OBJECTS)

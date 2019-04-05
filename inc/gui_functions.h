@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 18:14:46 by asarandi          #+#    #+#             */
-/*   Updated: 2018/11/09 05:24:51 by asarandi         ###   ########.fr       */
+/*   Updated: 2019/04/04 18:28:15 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef struct s_corewar_gui	t_gui;
 
 int	gui_block_visuals(t_gui *g);
 int	gui_calc_fps(t_gui *g);
-int	gui_clean_up(t_gui *g);
+int	gui_clean_up(t_gui *g, char *msg);
 int	gui_create_images(t_gui *g);
 int	gui_dist_bar(t_gui *g);
 int	gui_dist_bar_color(t_gui *g, int pos);

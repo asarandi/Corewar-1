@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 04:36:04 by asarandi          #+#    #+#             */
-/*   Updated: 2018/11/09 04:46:30 by asarandi         ###   ########.fr       */
+/*   Updated: 2019/04/04 14:03:42 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ int	gui_loop_hook_linux(t_gui *g)
 			execute_war(g->core);
 		i++;
 	}
-	(void)gui_create_images(g);
+//	(void)gui_create_images(g);
 	(void)gui_pc_boxes(g);
 	(void)gui_block_visuals(g);
 	(void)gui_live_bar(g);
 	(void)gui_dist_bar(g);
 	(void)gui_calc_fps(g);
 	(void)gui_info_panel(g);
-	(void)mlx_put_image_to_window(g->mlx, g->win, g->img, 0, 0);
+//	(void)mlx_put_image_to_window(g->mlx, g->win, g->img, 0, 0);
 	return (0);
 }
 
@@ -51,13 +51,13 @@ int	gui_loop_hook_macos(t_gui *g)
 			execute_war(g->core);
 		i++;
 	}
-	(void)gui_create_images(g);
+//	(void)gui_create_images(g);
 	(void)gui_pc_boxes(g);
 	(void)gui_block_visuals(g);
 	(void)gui_live_bar(g);
 	(void)gui_dist_bar(g);
 	(void)gui_calc_fps(g);
-	(void)mlx_put_image_to_window(g->mlx, g->win, g->img, 0, 0);
+//	(void)mlx_put_image_to_window(g->mlx, g->win, g->img, 0, 0);
 	(void)gui_info_panel(g);
 	return (0);
 }
@@ -73,14 +73,14 @@ int	gui_loop_hook_generic(t_gui *g)
 			execute_war(g->core);
 		i++;
 	}
-	(void)gui_create_images(g);
+//	(void)gui_create_images(g);
 	(void)gui_pc_boxes(g);
 	(void)gui_block_visuals(g);
 	(void)gui_live_bar(g);
 	(void)gui_dist_bar(g);
 	(void)gui_calc_fps(g);
 	(void)gui_info_panel(g);
-	(void)mlx_put_image_to_window(g->mlx, g->win, g->img, 0, 0);
+//	(void)mlx_put_image_to_window(g->mlx, g->win, g->img, 0, 0);
 	(void)gui_info_panel(g);
 	return (0);
 }

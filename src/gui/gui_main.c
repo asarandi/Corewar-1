@@ -6,78 +6,114 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 22:32:23 by asarandi          #+#    #+#             */
-/*   Updated: 2018/11/10 05:18:23 by asarandi         ###   ########.fr       */
+/*   Updated: 2019/04/04 20:03:24 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "gui.h"
 #include "corewar.h"
 
-int	gui_clean_up(t_gui *g)
+int	gui_clean_up(t_gui *g, char *msg)
 {
-	if (g == NULL)
-		return (0);
-	if (g->img != NULL)
-	{
-		(void)mlx_destroy_image(g->mlx, g->img);
-		g->img = NULL;
-	}
-	if (g->win != NULL)
-	{
-		(void)mlx_destroy_window(g->mlx, g->win);
-		g->win = NULL;
-	}
-	if (g->mlx != NULL)
-	{
-		free(g->mlx);
-		g->mlx = NULL;
-	}
+    if (msg)
+        ft_printf("%s\n", msg);
+    if (g->music)
+        sfMusic_destroy(g->music);
+    if (g->font)
+        sfFont_destroy(g->font);
+    if (g->sprite)
+        sfSprite_destroy(g->sprite);
+    if (g->window)
+        sfRenderWindow_destroy(g->window);    
 	free(g);
-	return (0);
-}
-
-int	gui_fatal_error(t_gui *g, char *msg)
-{
-	if (g != NULL)
-		gui_clean_up(g);
-	ft_printf(CONSOLE_TEXT_RED "ERROR:" CONSOLE_TEXT_EOC " %s\n", msg);
-	exit(0);
-	return (0);
-}
-
-int	gui_create_images(t_gui *g)
-{
-	if (g->img != NULL)
-		(void)mlx_destroy_image(g->mlx, g->img);
-	if ((g->img = mlx_new_image(g->mlx,
-					WIN_TOTAL_WIDTH, WIN_TOTAL_HEIGHT)) == NULL)
-		(void)gui_fatal_error(g, "mlx_new_image() failed");
-	g->img_data = mlx_get_data_addr(g->img,
-			&g->img_bpp, &g->img_size, &g->img_endian);
 	return (0);
 }
 
 int	gui_init(t_core *core)
 {
 	t_gui	*g;
+    bool    running;
 
 	g = ft_memalloc(sizeof(t_gui));
 	g->core = core;
-	if ((g->mlx = mlx_init()) == NULL)
-		gui_fatal_error(g, "mlx_init() failed");
-	(void)mlx_do_key_autorepeaton(g->mlx);
-	g->win = mlx_new_window(g->mlx,
-			WIN_TOTAL_WIDTH, WIN_TOTAL_HEIGHT, WIN_BLOCK_TITLE);
-	if (g->win == NULL)
-		gui_fatal_error(g, "mlx_new_window() failed");
-	g->cpf = 1;
+
+    g->mode.width = WIN_TOTAL_WIDTH;
+    g->mode.height = WIN_TOTAL_HEIGHT;
+    g->mode.bitsPerPixel = 32;
+    g->img_bpp = g->mode.bitsPerPixel;
+    g->img_size = g->mode.width * (g->mode.bitsPerPixel / CHAR_BIT);
+
+    g->window = sfRenderWindow_create(g->mode, WIN_BLOCK_TITLE, sfClose, NULL);
+    if (!g->window)
+        return gui_clean_up(g, "error: sfRenderWindow_create() failed");
+
+    g->font = sfFont_createFromFile("res/font.ttf");
+    if (!g->font)
+        return gui_clean_up(g, "error: sfFont_createFromFile() failed");
+    g->music = sfMusic_createFromFile("res/music.ogg");
+    if (!g->music)
+        return gui_clean_up(g, "error: sfMusic_createFromFile() failed");
+    sfMusic_play(g->music);
+    sfMusic_setLoop(g->music, TRUE);
+
+    g->sprite = sfSprite_create();
+    g->img_data = ft_memalloc(g->mode.width * g->mode.height * 4);
 	(void)gui_init_colors(g);
-	(void)mlx_hook(g->win, KEYPRESS, KEYPRESSMASK, gui_key_repeat, g);
-	(void)mlx_key_hook(g->win, gui_key_hook, g);
-	(void)mlx_mouse_hook(g->win, gui_mouse_hook, g);
-	(void)mlx_expose_hook(g->win, gui_expose_hook, g);
-	(void)mlx_loop_hook(g->mlx, GUI_LOOP_HOOK, g);
-	(void)mlx_loop(g->mlx);
-	(void)gui_clean_up(g);
+    
+    g->cpf = 1;
+    running = true;
+    while (running && sfRenderWindow_isOpen(g->window))
+    {
+        while (sfRenderWindow_pollEvent(g->window, &g->event))
+        {
+            if (g->event.type == sfEvtClosed)
+                sfRenderWindow_close(g->window);
+
+            if (g->event.type == sfEvtKeyPressed) {
+                if ((g->event.key.code == sfKeyQ) || (g->event.key.code == sfKeyEscape))
+                    running = false;
+
+                else if (g->event.key.code == sfKeySpace)
+                    g->state ^= 1;
+
+                else if (gui_is_numeric_key(g->event.key.code))
+                    (void)gui_set_cpf_to_numeric_key(g->event.key.code, g);
+
+                else if (sfKeyboard_isKeyPressed(sfKeyAdd))
+                    (void)gui_increment_cpf(sfKeyAdd, g);
+                
+                else if (sfKeyboard_isKeyPressed(sfKeySubtract))
+                    (void)gui_increment_cpf(sfKeySubtract, g);
+
+//               ft_printf("you pressed %08x\n", g->event.key.code);
+            }
+        }
+
+        for (int i=0; g->state && (i < g->cpf); i++) {
+            if (g->core->processes)
+                execute_war(g->core);
+        }
+
+        (void)ft_memset(g->img_data, 0, g->mode.width * g->mode.height * (g->mode.bitsPerPixel / CHAR_BIT));
+        (void)gui_pc_boxes(g);
+        (void)gui_block_visuals(g);
+        (void)gui_live_bar(g);
+        (void)gui_dist_bar(g);
+        (void)gui_calc_fps(g);
+
+        g->image = sfImage_createFromPixels(g->mode.width, g->mode.height, (sfUint8*)g->img_data);
+        g->texture = sfTexture_createFromImage(g->image, NULL); //null to load entire image
+        sfSprite_setTexture(g->sprite, g->texture, TRUE);
+
+        sfRenderWindow_clear(g->window, sfBlack);
+        sfRenderWindow_drawSprite(g->window, g->sprite, NULL);
+        
+        (void)gui_info_panel(g);
+        sfRenderWindow_display(g->window);
+
+        sfTexture_destroy(g->texture);
+        sfImage_destroy(g->image);
+    }
+	(void)gui_clean_up(g, NULL);
 	return (0);
 }

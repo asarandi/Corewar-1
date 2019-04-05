@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 01:06:49 by asarandi          #+#    #+#             */
-/*   Updated: 2018/11/09 02:07:33 by asarandi         ###   ########.fr       */
+/*   Updated: 2019/04/04 16:11:38 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ int	gui_live_bar(t_gui *g)
 		{
 			ptr = (int *)&g->img_data[(i * WTW + j) * g->img_bpp / CHAR_BIT];
 			if ((i == LBXP) || (i == x - 1) || (j == LBYP) || (j == y - 1))
-				*ptr = LIVE_BAR_BORDER_COLOR;
+				*ptr = LIVE_BAR_BORDER_COLOR | 0xff000000;
 			else
-				*ptr = gui_live_bar_color(g, j - LIVE_BAR_Y_POS);
+				*ptr = gui_live_bar_color(g, j - LIVE_BAR_Y_POS) | 0xff000000;
 			j++;
 		}
 		i++;
@@ -127,9 +127,9 @@ int	gui_dist_bar(t_gui *g)
 		{
 			ptr = (int *)&g->img_data[(i * WTW + j) * g->img_bpp / CHAR_BIT];
 			if ((i == DXP) || (i == x - 1) || (j == DYP) || (j == y - 1))
-				*ptr = DIST_BORDER_COLOR;
+				*ptr = DIST_BORDER_COLOR | 0xff000000;
 			else
-				*ptr = gui_dist_bar_color(g, j - DIST_Y_POS);
+				*ptr = gui_dist_bar_color(g, j - DIST_Y_POS) | 0xff000000;
 			j++;
 		}
 		i++;

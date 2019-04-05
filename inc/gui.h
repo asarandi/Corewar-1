@@ -6,22 +6,27 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 05:12:57 by asarandi          #+#    #+#             */
-/*   Updated: 2018/11/09 07:28:58 by asarandi         ###   ########.fr       */
+/*   Updated: 2019/04/04 20:28:35 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GUI_H
 # define GUI_H
 
+
+#include <SFML/Audio.h>
+#include <SFML/Graphics.h>
+
+# include "keycode.h"
+
 # include "gui_functions.h"
-# include "mlx.h"
 # include "corewar.h"
 # include "corestructs.h"
 # include "libft.h"
 # include "ft_printf.h"
-# include "keycode.h"
 # include <stdlib.h>
 # include <limits.h>
+# include <stdbool.h>
 
 # define CONSOLE_TEXT_RED		"\033[0;31m"
 # define CONSOLE_TEXT_EOC		"\033[0;00m"
@@ -44,8 +49,8 @@
 # define GUI_BLOCK_ARENA_Y_POS	10
 # define GUI_BLOCK_NUM_ROWS		64
 # define GUI_BLOCK_NUM_COLS		64
-# define GUI_BLOCK_WIDTH		10
-# define GUI_BLOCK_HEIGHT		10
+# define GUI_BLOCK_WIDTH		16
+# define GUI_BLOCK_HEIGHT		16
 # define GUI_BLOCK_ROW_HEIGHT	(GUI_BLOCK_HEIGHT + GUI_BLOCK_ROW_SPACING)
 # define GUI_BLOCK_COL_WIDTH	(GUI_BLOCK_WIDTH + GUI_BLOCK_COL_SPACING)
 # define WIN_BLOCK_HEIGHT	((GBRH * GBNR) + (GUI_BLOCK_ARENA_X_POS * 2))
@@ -95,6 +100,10 @@
 # define KEYPRESS				2
 # define GUI_NUMERIC_KEY_ARRAY	GNKA
 # define GNKA {KEY_1,KEY_2,KEY_3,KEY_4,KEY_5,KEY_6,KEY_7,KEY_8,KEY_9, KEY_0}
+
+
+
+
 # define GUI_NUMERIC_KEY_VALUES	{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}
 
 # define INFO_PANEL_WIDTH		(WIN_BLOCK_WIDTH / 2)
@@ -140,7 +149,7 @@
 #  define GUI_LOOP_HOOK	gui_loop_hook_linux
 #  define INFO_PANEL_X			(GUI_BLOCK_ARENA_X_POS + 10)
 # elif __APPLE__
-#  define GUI_CHAR_HEIGHT		15
+#  define GUI_CHAR_HEIGHT		25
 #  define GUI_CHAR_WIDTH		9
 #  define LIVE_BAR_TEXT_X_POS	(LIVE_BAR_X_POS - (GUI_CHAR_HEIGHT * 1) - 4)
 #  define DIST_TEXT_X_POS		(DIST_X_POS - (GUI_CHAR_HEIGHT * 1) - 4)
@@ -158,6 +167,17 @@
 typedef struct		s_corewar_gui
 {
 	t_core			*core;
+
+    sfVideoMode     mode;
+    sfRenderWindow* window;
+    sfTexture*      texture;
+    sfSprite*       sprite;
+    sfFont*         font;
+    sfText*         text;
+    sfMusic*        music;
+    sfEvent         event;
+    sfImage*        image;
+  
 	void			*mlx;
 	void			*win;
 	void			*img;

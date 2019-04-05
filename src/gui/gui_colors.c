@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 21:09:55 by asarandi          #+#    #+#             */
-/*   Updated: 2018/11/09 02:08:36 by asarandi         ###   ########.fr       */
+/*   Updated: 2019/04/04 18:03:19 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	gui_init_colors(t_gui *g)
 	int			j;
 	int			rgb;
 	float		lum;
-	const float	hues[] = GUI_PLAYER_HUES1;
+	const float	hues[] = GUI_PLAYER_HUES2;
 
 	i = 0;
 	while (i < MAX_LUM_STEPS + 1)

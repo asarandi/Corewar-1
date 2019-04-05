@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 20:48:57 by asarandi          #+#    #+#             */
-/*   Updated: 2018/11/09 02:07:59 by asarandi         ###   ########.fr       */
+/*   Updated: 2019/04/04 16:22:41 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	gui_put_block(t_gui *g, int i, int j)
 		{
 			idx = (i * g->img_size) + (j * g->img_bpp / CHAR_BIT);
 			ptr = (int *)&g->img_data[idx];
-			*ptr = rgb;
+			*ptr = rgb | 0xff000000;
 			j++;
 		}
 		j -= GUI_BLOCK_WIDTH;

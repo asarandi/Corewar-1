@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 18:04:16 by asarandi          #+#    #+#             */
-/*   Updated: 2018/11/09 04:36:57 by asarandi         ###   ########.fr       */
+/*   Updated: 2019/04/04 18:29:01 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	gui_key_hook(int keycode, t_gui *g)
 {
 	if ((keycode == KEY_ESCAPE) || (keycode == KEY_Q))
 	{
-		(void)gui_clean_up(g);
+		(void)gui_clean_up(g, NULL);
 		exit(0);
 	}
 	else if (gui_is_numeric_key(keycode))

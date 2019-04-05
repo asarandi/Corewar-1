@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 00:41:15 by asarandi          #+#    #+#             */
-/*   Updated: 2018/11/09 02:09:41 by asarandi         ###   ########.fr       */
+/*   Updated: 2019/04/04 16:13:27 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	gui_mark_pc(t_gui *g, int i, int j)
 		{
 			k = (i * g->img_size) + (j * g->img_bpp / CHAR_BIT);
 			ptr = (int *)&g->img_data[k];
-			*ptr = GUI_PC_BOX_COLOR;
+			*ptr = GUI_PC_BOX_COLOR | 0xff000000;
 			j++;
 		}
 		i++;

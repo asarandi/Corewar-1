@@ -1,0 +1,2 @@
+font.ttf:   https://github.com/todylu/monaco.ttf
+music.ogg:  http://freemusicarchive.org/music/BoxCat_Games/Nameless_the_Hackers_RPG_Soundtrack/BoxCat_Games_-_Nameless-_the_Hackers_RPG_Soundtrack_-_10_Epic_Song
