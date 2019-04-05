@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 20:48:57 by asarandi          #+#    #+#             */
-/*   Updated: 2019/04/04 16:22:41 by asarandi         ###   ########.fr       */
+/*   Updated: 2019/04/04 21:23:08 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	gui_put_block(t_gui *g, int i, int j)
 	int	i_dst;
 	int j_dst;
 	int	rgb;
-	int *ptr;
+	uint32_t *ptr;
 	int idx;
 
 	rgb = gui_get_block_color(g, i, j);
@@ -42,7 +42,7 @@ int	gui_put_block(t_gui *g, int i, int j)
 		while (j < j_dst)
 		{
 			idx = (i * g->img_size) + (j * g->img_bpp / CHAR_BIT);
-			ptr = (int *)&g->img_data[idx];
+			ptr = (uint32_t *)&g->img_data[idx];
 			*ptr = rgb | 0xff000000;
 			j++;
 		}

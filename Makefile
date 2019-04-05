@@ -161,10 +161,6 @@ ifneq (,$(wildcard ./SFML-2.5.1-macos-clang/extlibs/*.framework))
 	mv -f SFML-2.5.1-macos-clang/extlibs/* SFML-2.5.1-macos-clang/Frameworks
 endif
 
-ifeq (,$(wildcard ./monaco.ttf))
-	git clone https://github.com/todylu/monaco.ttf
-endif
-
 	@clear
 	@echo 'run these commands in your terminal:'
 	@echo

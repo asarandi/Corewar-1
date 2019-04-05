@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 00:41:15 by asarandi          #+#    #+#             */
-/*   Updated: 2019/04/04 16:13:27 by asarandi         ###   ########.fr       */
+/*   Updated: 2019/04/04 21:21:14 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	gui_mark_pc(t_gui *g, int i, int j)
 	int j_dst;
 	int j_save;
 	int k;
-	int *ptr;
+	uint32_t *ptr;
 
 	i = GUI_BLOCK_ARENA_X_POS + (i * GUI_BLOCK_ROW_HEIGHT) - 1;
 	i_dst = i + GUI_BLOCK_HEIGHT + 2;
@@ -31,8 +31,8 @@ int	gui_mark_pc(t_gui *g, int i, int j)
 		while (j < j_dst)
 		{
 			k = (i * g->img_size) + (j * g->img_bpp / CHAR_BIT);
-			ptr = (int *)&g->img_data[k];
-			*ptr = GUI_PC_BOX_COLOR | 0xff000000;
+			ptr = (uint32_t *)&g->img_data[k];
+			*ptr = (uint32_t) (GUI_PC_BOX_COLOR << 8) | 0xff;
 			j++;
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: asarandi <asarandi@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 21:09:55 by asarandi          #+#    #+#             */
-/*   Updated: 2019/04/04 20:45:46 by asarandi         ###   ########.fr       */
+/*   Updated: 2019/04/04 21:25:20 by asarandi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	gui_hsl2rgb_int(float *rgb)
 	ri = roundf(UCHAR_MAX * rgb[0]);
 	gi = roundf(UCHAR_MAX * rgb[1]);
 	bi = roundf(UCHAR_MAX * rgb[2]);
-	return ((ri << 16) + (gi << 8) + bi);
+	return (ri + (gi << 8) + (bi << 16));
 }
 
 int	gui_hsl2rgb_hue_index(float h1)
@@ -85,7 +85,7 @@ int	gui_init_colors(t_gui *g)
 	int			j;
 	int			rgb;
 	float		lum;
-	const float	hues[] = GUI_PLAYER_HUES2;
+	const float	hues[] = GUI_PLAYER_HUES1;
 
 	i = 0;
 	while (i < MAX_LUM_STEPS + 1)
