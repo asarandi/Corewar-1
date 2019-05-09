@@ -28,14 +28,16 @@ VMOPSOBJDIR = $(addprefix $(VMOBJDIR), $(VMOPSDIR))
 VM_OBJECTS=$(addprefix $(VMOBJDIR), $(addsuffix .o, $(VM_FILES)))
 
 GUI_FILES = gui_main gui_bars gui_blocks gui_colors gui_cpf gui_hooks gui_pc_boxes gui_text gui_loop
-UNAME	:= $(shell uname -s)
+
+#UNAME	:= $(shell uname -s)
 #ifeq ($(UNAME),Darwin)
 #	GUI_FILES += gui_mlx_macos
 #endif
-ifeq ($(UNAME),Linux)
-	GUI_FILES += gui_mlx_linux
-	CFLAGS += -Wno-unused-result
-endif
+#ifeq ($(UNAME),Linux)
+#	GUI_FILES += gui_mlx_linux
+#	CFLAGS += -Wno-unused-result
+#endif
+
 GUIDIR = gui/
 GUISRCDIR = $(addprefix $(SRC_DIR), $(GUIDIR))
 GUIOBJDIR = $(addprefix $(OBJ_DIR), $(GUIDIR))
@@ -56,7 +58,7 @@ DISASMOBJDIR = $(addprefix $(OBJ_DIR), $(DISASMDIR))
 DISASM_OBJECTS = $(addprefix $(DISASMOBJDIR), $(addsuffix .o, $(DISASM_FILES)))
 
 SFMLINC := -I CSFML-2.5-macOS-clang/include 
-SFMLLIB := -L CSFML-2.5-macOS-clang/lib -lcsfml-graphics -lcsfml-audio -lcsfml-window
+SFMLLIB := -L CSFML-2.5-macOS-clang/lib -lcsfml-graphics -lcsfml-audio -lcsfml-window -lm
 
 ifeq ($(UNAME),Linux)
 	MLXDIR := $(MLXDIR)linux/
@@ -186,7 +188,7 @@ again:
 	make $(VM)
 
 clean:
-	make $@ -C $(MLXDIR)
+#	make $@ -C $(MLXDIR)
 	@make $@ -C $(LIBFTDIR)
 	@rm -rf $(OBJ_DIR)
 	@echo "$(RED)Object files removed$(NC)"
